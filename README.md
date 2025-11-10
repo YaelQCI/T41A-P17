@@ -45,6 +45,18 @@ WHERE data->>'activo' = 'true';
 ```sql
 CREATE INDEX idx_data_gin ON usuarios USING GIN (data);
 ```
+## 🧠 ¿Para qué sirve en JSONB?
+Cuando tienes una columna JSONB con muchos datos semiestructurados, las consultas pueden volverse lentas si no hay un índice. El índice GIN permite:
+
+Buscar claves y valores dentro del JSONB.
+Usar operadores como @>, ?, ?&, ?| de forma eficiente.
+
+Este índice permite acelerar consultas como:
+
+```sql
+SELECT * FROM usuarios
+WHERE data @> '{"activo": true}';
+```
 
 ---
 
