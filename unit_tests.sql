@@ -17,3 +17,4 @@ BEGIN
   ) THEN
     RAISE EXCEPTION 'Fallo: edad incorrecta para id 2';
   END IF;
+$$
