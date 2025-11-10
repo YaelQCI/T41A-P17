@@ -1,7 +1,7 @@
 DO $$
 BEGIN
   IF EXISTS (
-    SELECT 1 FROM usuarios WHERE id = 1 AND data->>'nombre' = 'Ana'
+    SELECT 1 FROM usuarios WHERE id = 1 AND data->>'nombre' = 'Pedrito'
   ) THEN
     RAISE NOTICE 'OK: nombre correcto para id 1';
   ELSE
