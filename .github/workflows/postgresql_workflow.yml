@@ -47,9 +47,5 @@ jobs:
     - name: Run unit tests and log results
       run: |
         PSQL="PGPASSWORD=postgres psql -h localhost -U postgres -d test_db"
-        $PSQL -f unit_tests.sql > test_results.log
+        $PSQL -f unit_tests.sql
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-result
