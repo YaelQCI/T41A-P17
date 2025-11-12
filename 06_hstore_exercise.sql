@@ -1,20 +1,20 @@
--- 1. Crear la extensión y la tabla
 CREATE EXTENSION IF NOT EXISTS hstore;
 
 CREATE TABLE productos2 (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
+    precio NUMERIC(10, 2), -- Columna ADICIONAL para el Ejercicio 2
     atributos HSTORE
 );
 
--- 2. Insertar registros con múltiples pares clave-valor
-INSERT INTO productos2 (nombre, atributos)
+-- Insertar los datos base
+INSERT INTO productos2 (nombre, precio, atributos)
 VALUES 
-('Sony WH-1000XM4', '"marca"=>"Sony", "peso"=>"2.5", "color"=>"negro", "tipo"=>"Audífonos", "bluetooth"=>"true"'),
-('Oster Licuadora', '"marca"=>"Oster", "peso"=>"3.1", "color"=>"rojo", "tipo"=>"Licuadora", "velocidades"=>"5"'),
-('Logitech G Pro', '"marca"=>"Logitech", "peso"=>"0.15", "color"=>"blanco", "tipo"=>"Mouse", "dpi"=>"16000"'),
-('Nike Air Max', '"marca"=>"Nike", "peso"=>"0.8", "color"=>"rojo", "tipo"=>"Zapatillas", "talla"=>"US 10"'),
-('IKEA Micke', '"marca"=>"IKEA", "peso"=>"15.0", "color"=>"rojo", "tipo"=>"Escritorio", "dimensiones"=>"120x60cm"');
+('Sony WH-1000XM4', 550.00, '"marca"=>"Sony", "peso"=>"2.5", "color"=>"negro", "tipo"=>"Audífonos", "bluetooth"=>"true"'),
+('Oster Licuadora', 89.50, '"marca"=>"Oster", "peso"=>"3.1", "color"=>"rojo", "tipo"=>"Licuadora", "velocidades"=>"5"'),
+('Logitech G Pro', 129.99, '"marca"=>"Logitech", "peso"=>"0.15", "color"=>"blanco", "tipo"=>"Mouse", "dpi"=>"16000"'),
+('Nike Air Max', 150.00, '"marca"=>"Nike", "peso"=>"0.8", "color"=>"rojo", "tipo"=>"Zapatillas", "talla"=>"US 10"'),
+('IKEA Micke', 79.00, '"marca"=>"IKEA", "peso"=>"15.0", "color"=>"rojo", "tipo"=>"Escritorio", "dimensiones"=>"120x60cm"');
 
 -- 3. Consultar por una clave específica (color = 'rojo')
 SELECT * FROM productos2 WHERE atributos -> 'color' = 'rojo';
