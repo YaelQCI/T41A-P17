@@ -52,7 +52,23 @@ jobs:
 
     - name: Query data
       run: |
-        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 03_query_data.sql          
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 03_query_data.sql
+
+    - name: Json Exercises
+      run: |
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 05_json_exercise.sql
+        
+    - name: HSTORE Exercises
+      run: |
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 06_hstore_exercise.sql
+
+    - name: Intermedios Exercises
+      run: |
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 07_ejercicios_intermedios.sql
+
+    - name: Avanzados Exercises
+      run: |
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 08_ejercicios_avanzados.sql
 
     - name: Run unit tests
       run: |
