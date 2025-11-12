@@ -11,24 +11,32 @@ DB_CONFIG = {
     "port": 5432
 }
 
+import psycopg2
+import pytest
+import json
+
+# ... (tu DB_CONFIG va aquí) ...
+
 @pytest.fixture
 def db_cursor():
     """
     Fixture de Pytest para gestionar la conexión y transacciones de la BD.
-
-    - Se conecta ANTES de cada prueba.
-    - Inicia una transacción.
-    - Entrega (yield) el cursor a la prueba.
-    - Hace un ROLLBACK DESPUÉS de cada prueba para limpiar la BD.
+    ¡AHORA INCLUYE TRUNCATE!
     """
     conn = None
     try:
         conn = psycopg2.connect(**DB_CONFIG)
         cur = conn.cursor()
+
+        # Vacía AMBAS tablas antes de cada prueba para asegurar aislamiento.
+        # RESTART IDENTITY reinicia los contadores (ej. SERIAL)
+        cur.execute("TRUNCATE TABLE productos, productos2 RESTART IDENTITY;")
+        
         yield cur
+        
     finally:
         if conn:
-            conn.rollback()  # ¡La parte clave! Limpia la BD.
+            conn.rollback()  # Deshace lo que la prueba haya insertado
             conn.close()
 
 # --- Pruebas Unitarias ---
