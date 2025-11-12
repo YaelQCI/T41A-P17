@@ -15,19 +15,24 @@ DB_CONFIG = {
 @pytest.fixture
 def db_cursor():
     """
-    Fixture de Pytest para gestionar la conexión y transacciones de la BD.
-    Se conecta, registra el adaptador HSTORE y hace rollback al final.
+    Fixture de Pytest que gestiona la conexión Y
+    ASEGURA QUE LAS TABLAS ESTÉN LIMPIAS antes de cada prueba.
     """
     conn = None
     try:
         conn = psycopg2.connect(**DB_CONFIG)
-        register_hstore(conn)  # ¡Crucial para HSTORE!
+        register_hstore(conn)
         cur = conn.cursor()
+
+        # Vacía las tablas antes de que la prueba comience
+        # RESTART IDENTITY reinicia los contadores SERIAL (buena práctica)
+        cur.execute("TRUNCATE TABLE productos, productos2 RESTART IDENTITY;")
+        
         yield cur
         
     finally:
         if conn:
-            conn.rollback()  # Limpia la BD después de CADA prueba
+            conn.rollback()  # Deshace lo que la prueba haya hecho
             conn.close()
 
 # --- Pruebas Unitarias ---
